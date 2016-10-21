@@ -1,3 +1,4 @@
+module.exports = (function () {
 /********************* VARIABLES *********************/
 
 /*
@@ -57,7 +58,14 @@ var async = require('async'),                               // Used to make vale
         /* Once a category has a grade, it too can have grade information */
         grade: null
     },
-    debugMode = true;
+    debugMode = true,
+    URL;
+
+if (typeof data.courseName === "undefined" || typeof data.orgUnitId === "undefined") {
+  URL = window.location.href;
+  data.orgUnitId = URL.substring(URL.lastIndexOf('/')+1, URL.length);
+  data.courseName = window.top.$('a[title][href="/d2l/home' + data.orgUnitId + '"]').attr('title');
+}
 
 /********************* HELPER FUNCTIONS *********************/
 
@@ -398,3 +406,4 @@ function run(callback) {
 return {
     run: run
 };
+}());
