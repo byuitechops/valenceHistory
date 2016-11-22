@@ -21,9 +21,21 @@
 }(typeof window !== 'undefined' ? window : this, window => {
     'use strict'
 
-    function Construct(version, api_string) {
+    /*
+    PLAN
+    Make a white pages object with the routing table.
+    http://docs.valence.desire2learn.com/http-routingtable.html
+    */
+
+    function Construct(version, call) {
         this.valence_version = version
-        this.api_string = api_string
+        this.api_version = 1.18
+
+        /*Specify option with lp or le with this.api_base_string*/
+
+        this.api_base_string = `/d2l/api/lp/${this.api_version}/`
+        this.call = call
+        this.response_json = {}
     }
 
     Construct.prototype = {
@@ -32,18 +44,23 @@
             var httpRequest = new XMLHttpRequest()
 
             if (!httpRequest) {
-                alert('Giving up :( Cannot create an XMLHTTP instance')
+                console.error('Giving up :( Cannot create an XMLHTTP instance')
                 return false
             }
 
             httpRequest.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    console.log(JSON.parse(this.responseText))
+                    let obj = JSON.parse(this.responseText)
+                    this.response_json = obj
+                } else {
+                    console.error('Can not retrieve data from API call')
                 }
             }
 
             httpRequest.open('GET', url)
             httpRequest.send()
+
+            return this
         }
     }
 
