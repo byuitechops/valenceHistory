@@ -1,36 +1,55 @@
-/*eslint no-console: ["error", { allow: ["warn", "error"] }] */
+/*eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
+/* global module */
 
 (function (global, factory) {
 
     'use strict'
 
-    factory(global)
+    if (typeof module === 'object' && typeof module.exports === 'object') {
+        module.exports = global.document ?
+            factory(global, true) :
+            (w) => {
+                if (!w.document) {
+                    throw new Error('Valence requires a window with a document')
+                }
+                return factory(w)
+            }
+    } else {
+        factory(global)
+    }
 
-}(typeof window !== 'undefined' ? window : this, global => {
+}(typeof window !== 'undefined' ? window : this, window => {
     'use strict'
 
-    var vers = '2.0.0'
+    function Construct(version, api_string) {
+        this.valence_version = version
+        this.api_string = api_string
+    }
 
-    function Start(version, selector) {
-        this.wand_version = version
-        this.selector = selector
-        this.tag = ''
-        this.child = ''
+    Construct.prototype = {
+        fetch: function (url) {
 
-        this.queryTag(this.selector)
+            var httpRequest = new XMLHttpRequest()
 
-        if (this.tag === null) {
-            this.createTag(this.selector)
-        } else if (this.selector === undefined) {
-            this.createTag(this.child)
+            if (!httpRequest) {
+                alert('Giving up :( Cannot create an XMLHTTP instance')
+                return false
+            }
+
+            httpRequest.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(JSON.parse(this.responseText))
+                }
+            }
+
+            httpRequest.open('GET', url)
+            httpRequest.send()
         }
     }
 
-    Start.prototype = {
-    }
-
-    global.wand = function (a) {
-        var obj = new Start(vers, a)
+    window.valence = function (a) {
+        var vers = '2.0.0',
+            obj = new Construct(vers, a)
 
         return obj
     }

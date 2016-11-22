@@ -3,15 +3,18 @@
   "version": "2.0.0",
   "description": "This is a library to be used in the browser for Brightspace Valence API calls.",
   "main": "valence.js",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-preset-latest": "^6.16.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "eslint": "^3.10.2",
     "uglify-js": "^2.7.4"
   },
-  "devDependencies": {
-    "eslint": "^3.10.2"
-  },
   "scripts": {
-      "min": "uglifyjs --screw-ie8 ./valence.js -c -m --output ./valence.min.js",
-      "lint": "eslint ./valence.js"
+    "min": "uglifyjs --screw-ie8 ./bin/valence-comp.js -c -m --output ./build/valence.min.js",
+		  "pro-script": "babel ./valence.js --out-file ./bin/valence-comp.js && npm run min",
+    "lint": "eslint ./valence.js"
   },
   "repository": {
     "type": "git",
