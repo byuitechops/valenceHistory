@@ -1,21 +1,26 @@
 {
-    "name": "valence",
-    "version": "2.0.0",
-    "description": "This is a library to be used in the browser for Brightspace Valence API calls.",
-    "main": "valence.js",
-    "dependencies": {},
-    "devDependencies": {},
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/byuicampuscd/valence.git"
-    },
-    "author": "Andrew Gremlich",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/byuicampuscd/valence/issues"
-    },
-    "homepage": "https://github.com/byuicampuscd/valence#readme"
+  "name": "valence",
+  "version": "2.0.0",
+  "description": "This is a library to be used in the browser for Brightspace Valence API calls.",
+  "main": "valence.js",
+  "dependencies": {
+    "uglify-js": "^2.7.4"
+  },
+  "devDependencies": {
+    "eslint": "^3.10.2"
+  },
+  "scripts": {
+      "min": "uglifyjs --screw-ie8 ./valence.js -c -m --output ./valence.min.js",
+      "lint": "eslint ./valence.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/byuicampuscd/valence.git"
+  },
+  "author": "Andrew Gremlich",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/byuicampuscd/valence/issues"
+  },
+  "homepage": "https://github.com/byuicampuscd/valence#readme"
 }
