@@ -1,26 +1,21 @@
 {
-  "name": "valence",
-  "version": "1.0.0",
-  "description": "This allows us to query the valence API asynchronously.",
-  "main": "valence.js",
-  "dependencies": {
-    "async": "^2.1.2",
-    "query-string": "^4.2.3",
-    "superagent-d2l-session-auth": "^1.0.3",
-    "superagent": "^1.8.4"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/byuicampuscd/valence.git"
-  },
-  "author": "Grant Merrill",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/byuicampuscd/valence/issues"
-  },
-  "homepage": "https://github.com/byuicampuscd/valence#readme"
+    "name": "valence",
+    "version": "2.0.0",
+    "description": "This is a library to be used in the browser for Brightspace Valence API calls.",
+    "main": "valence.js",
+    "dependencies": {},
+    "devDependencies": {},
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/byuicampuscd/valence.git"
+    },
+    "author": "Andrew Gremlich",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/byuicampuscd/valence/issues"
+    },
+    "homepage": "https://github.com/byuicampuscd/valence#readme"
 }
