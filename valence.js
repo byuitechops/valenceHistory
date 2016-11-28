@@ -44,11 +44,11 @@
             var httpRequest = new XMLHttpRequest()
 
             if (!httpRequest) {
-                console.error('Giving up :( Cannot create an XMLHTTP instance')
+                console.error('Cannot create an XMLHTTP instance')
                 return false
             }
 
-            httpRequest.onreadystatechange = function () {
+            httpRequest.onreadystatechange = () => {
                 if (this.readyState == 4 && this.status == 200) {
                     let obj = JSON.parse(this.responseText)
                     this.response_json = obj
@@ -64,7 +64,7 @@
         }
     }
 
-    window.valence = function (a) {
+    window.valence = a => {
         var vers = '2.0.0',
             obj = new Construct(vers, a)
 
