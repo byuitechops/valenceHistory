@@ -68,9 +68,10 @@
             httpRequest.onerror = function (e) {
                 console.log('Can not retrieve API data', e, httpRequest.statusText)
 
-            httpRequest.setRequestHeader('Content-Type', 'application/json')
-            httpRequest.send()
+                httpRequest.setRequestHeader('Content-Type', 'application/json')
+                httpRequest.send()
 
+            }
         },
         getOU: function () {
             //Parse the URL and return a string for the OU
