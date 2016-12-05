@@ -27,45 +27,63 @@
     http://docs.valence.desire2learn.com/http-routingtable.html
     */
 
-    function Construct(version, call) {
-        this.valence_version = version
-        this.api_version = 1.18
+    /*Specify option with lp or le with this.api_base_string.  lr seems unnecessary*/
 
-        /*Specify option with lp or le with this.api_base_string*/
 
-        this.api_base_string = `/d2l/api/lp/${this.api_version}/`
-        this.call = call
-        this.response_json = {}
+    /*STATIC METHODS*/
+    function getCall(call, ver, ou) {
+        let directory = {
+            whoami: `/d2l/api/lp/${ver}/users/whoami`,
+            getFinalGrade: `/d2l/api/le/${ver}/${ou}/grades/values/myGradeValues/`
+        }
+
+        return directory[call]
     }
 
+    /*CONSTRUCTOR*/
+    function Construct(version, call) {
+        this.lib_version = version
+        this.api_version = 1.15
+        this.call = call
+        this.ou = this.getOU()
+        this.api_base_string = getCall(this.call, this.api_version, this.ou)
+        this.response = {}
+
+        this.fetch()
+    }
+
+    /*PROTOTYPE METHODS*/
     Construct.prototype = {
-        fetch: function (url) {
+        fetch: function () {
 
-            var httpRequest = new XMLHttpRequest()
+            var httpRequest = new XMLHttpRequest(),
+                that = this
 
-            if (!httpRequest) {
-                console.error('Giving up :( Cannot create an XMLHTTP instance')
-                return false
+            httpRequest.open('GET', this.api_base_string, false)
+
+            httpRequest.onload = function () {
+                that.response = JSON.parse(this.responseText)
             }
 
-            httpRequest.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    let obj = JSON.parse(this.responseText)
-                    this.response_json = obj
-                } else {
-                    console.error('Can not retrieve data from API call')
-                }
+            httpRequest.onerror = function (e) {
+                console.log('Can not retrieve API data', e, httpRequest.statusText)
             }
 
-            httpRequest.open('GET', url)
+            httpRequest.setRequestHeader('Content-Type', 'application/json')
             httpRequest.send()
 
-            return this
+        },
+        getOU: function () {
+            //Parse the URL and return a string for the OU
+            var ou = window.location.pathname.split('/')[4] || window.location.pathname.split('/')[3]
+            console.log(ou)
+            return ou
         }
     }
 
+    /*WINDOW ATTACHER*/
     window.valence = function (a) {
-        var vers = '2.0.0',
+        let vers = '2.0.0',
             obj = new Construct(vers, a)
 
         return obj
