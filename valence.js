@@ -41,12 +41,13 @@
     }
 
     /*CONSTRUCTOR*/
-    function Construct(version, call) {
+    function Construct(version, call, callback) {
         this.lib_version = version
         this.api_version = 1.15
         this.call = call
         this.ou = this.getOU()
         this.api_base_string = getCall(this.call, this.api_version, this.ou)
+        this.callback = callback
         this.response = {}
 
         this.fetch()
@@ -59,32 +60,36 @@
             var httpRequest = new XMLHttpRequest(),
                 that = this
 
-            httpRequest.open('GET', this.api_base_string, false)
+            httpRequest.open('GET', this.api_base_string, true)
 
             httpRequest.onload = function () {
-                that.response = JSON.parse(this.responseText)
+
+                let r = JSON.parse(this.responseText)
+
+                that.response = r
+                that.callback(r)
             }
 
             httpRequest.onerror = function (e) {
                 console.log('Can not retrieve API data', e, httpRequest.statusText)
-
-                httpRequest.setRequestHeader('Content-Type', 'application/json')
-                httpRequest.send()
-
             }
+
+            httpRequest.setRequestHeader('Content-Type', 'application/json')
+            httpRequest.send()
+
+            return this
         },
         getOU: function () {
             //Parse the URL and return a string for the OU
             var ou = window.location.pathname.split('/')[4] || window.location.pathname.split('/')[3]
-            console.log(ou)
             return ou
         }
     }
 
     /*WINDOW ATTACHER*/
-    window.valence = function (a) {
+    window.valence = function (a, b) {
         let vers = '2.0.0',
-            obj = new Construct(vers, a)
+            obj = new Construct(vers, a, b)
 
         return obj
     }
