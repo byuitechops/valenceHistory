@@ -22,52 +22,40 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 })(typeof window !== 'undefined' ? window : undefined, function (window) {
     'use strict';
 
-    /*
-    PLAN
-    Make a white pages object with the routing table.
-    http://docs.valence.desire2learn.com/http-routingtable.html
-    */
-
-    /*Specify option with lp or le with this.api_base_string.  lr seems unnecessary*/
-
-    /*STATIC METHODS*/
-
-    function getCall(call, ver, ou) {
-        var directory = {
-            whoami: '/d2l/api/lp/' + ver + '/users/whoami',
-            getFinalGrade: '/d2l/api/le/' + ver + '/' + ou + '/grades/values/myGradeValues/'
-        };
-
-        return directory[call];
-    }
-
     /*CONSTRUCTOR*/
-    function Construct(version, call) {
+
+    function Construct(version, call, callback) {
         this.lib_version = version;
         this.api_version = 1.15;
         this.call = call;
         this.ou = this.getOU();
-        this.api_base_string = getCall(this.call, this.api_version, this.ou);
+        this.api_base_string = this.getCall(this.call, this.api_version, this.ou);
+        this.callback = callback;
         this.response = {};
 
-        this.fetch();
+        this.asyncr = arguments[2] ? true : false;
+
+        this.fetch(this.asyncr);
     }
 
     /*PROTOTYPE METHODS*/
     Construct.prototype = {
-        fetch: function fetch() {
+        fetch: function fetch(asyncr) {
 
             var httpRequest = new XMLHttpRequest(),
-                that = this;
+                that = this,
+                bool = asyncr;
 
-            httpRequest.open('GET', this.api_base_string, false);
+            httpRequest.open('GET', this.api_base_string, bool);
 
             httpRequest.onload = function () {
-                that.response = JSON.parse(this.responseText);
+                var r = JSON.parse(this.responseText);
+                that.response = r;
+                that.callback ? that.callback(r) : console.warn('You have done a synchronous request.  Are you sure you want to continue?');
             };
 
             httpRequest.onerror = function (e) {
-                console.log('Can not retrieve API data', e, httpRequest.statusText);
+                console.warn('Can not retrieve API data', e, httpRequest.statusText);
             };
 
             httpRequest.setRequestHeader('Content-Type', 'application/json');
@@ -77,15 +65,30 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         },
         getOU: function getOU() {
             //Parse the URL and return a string for the OU
-            var ou = window.location.pathname.split('/')[4];
+            var ou = window.location.pathname.split('/')[4] || window.location.pathname.split('/')[3];
             return ou;
+        },
+        getCall: function getCall(call, ver, ou) {
+
+            /*
+            PLAN
+            Make a white pages object with the routing table.
+            http://docs.valence.desire2learn.com/http-routingtable.html
+            */
+
+            var directory = {
+                whoami: '/d2l/api/lp/' + ver + '/users/whoami',
+                getFinalGrade: '/d2l/api/le/' + ver + '/' + ou + '/grades/values/myGradeValues/'
+            };
+
+            return directory[call];
         }
     };
 
     /*WINDOW ATTACHER*/
-    window.valence = function (a) {
+    window.valence = function (a, b) {
         var vers = '2.0.0',
-            obj = new Construct(vers, a);
+            obj = new Construct(vers, a, b);
 
         return obj;
     };
