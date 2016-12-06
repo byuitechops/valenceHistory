@@ -50,24 +50,27 @@
         this.callback = callback
         this.response = {}
 
-        this.fetch()
+        this.asyncr = arguments[2] ? true : false
+
+        this.fetch(this.asyncr)
     }
 
     /*PROTOTYPE METHODS*/
     Construct.prototype = {
-        fetch: function () {
+        fetch: function (asyncr) {
 
             var httpRequest = new XMLHttpRequest(),
-                that = this
+                that = this,
+                bool = asyncr
 
-            httpRequest.open('GET', this.api_base_string, true)
+            console.log(bool)
+
+            httpRequest.open('GET', this.api_base_string, bool)
 
             httpRequest.onload = function () {
-
                 let r = JSON.parse(this.responseText)
-
                 that.response = r
-                that.callback(r)
+                that.callback ? that.callback(r) : console.warn("You have done a synchronous request.  Are you sure you want to continue?")
             }
 
             httpRequest.onerror = function (e) {
