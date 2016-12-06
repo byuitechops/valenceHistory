@@ -28,6 +28,9 @@ Attach the library from [Equella](https://content.byui.edu/items/912ef28e-e9d3-4
 
     `valence('getFinalGrade', e => {console.log(e)})`
     
+### Note
+The `${ver}` and `${ou}` are filled out for you in the library.
+    
 ## For the Developer
 
 This repository contains an eslint standard and the code is compiled and minified through Babel.  To make additional changes, clone the repository and then compile and minify the code.  Once all is finished, then submit the changes.
