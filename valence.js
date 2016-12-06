@@ -95,10 +95,14 @@
 
             if (directory[call] === undefined) {
 
-                var not_found = call
+                /*If the user wants to use a whole routing API anyway and the shortened version is
+                  not found in the directory.*/
+
+                let not_found = call
 
                 console.warn("API call not found in library directory")
                 console.warn("Is this the one you wanted? ", not_found)
+
                 return not_found
 
             } else {
