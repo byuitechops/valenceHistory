@@ -91,7 +91,17 @@
                 getFinalGrade: `/d2l/api/le/${ver}/${ou}/grades/values/myGradeValues/`
             }
 
-            return directory[call]
+            if (directory[call] === undefined) {
+
+                var not_found = call
+
+                console.warn("API call not found in library directory")
+                console.warn("Is this the one you wanted? ", not_found)
+                return not_found
+
+            } else {
+                return directory[call]
+            }
         }
     }
 

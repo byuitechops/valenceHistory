@@ -10,6 +10,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     'use strict';
 
     if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && _typeof(module.exports) === 'object') {
+
+        /*
+        Check to see if in Nodejs environment
+        */
+
         module.exports = global.document ? factory(global, true) : function (w) {
             if (!w.document) {
                 throw new Error('Valence requires a window with a document');
@@ -17,6 +22,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             return factory(w);
         };
     } else {
+
+        /*
+        Done in the browser
+        */
+
         factory(global);
     }
 })(typeof window !== 'undefined' ? window : undefined, function (window) {
@@ -33,14 +43,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         this.callback = callback;
         this.response = {};
 
+        /*Check to see if call need to be async or not.*/
         this.asyncr = arguments[2] ? true : false;
 
+        /*Get the data*/
         this.fetch(this.asyncr);
     }
 
     /*PROTOTYPE METHODS*/
     Construct.prototype = {
         fetch: function fetch(asyncr) {
+
+            /*AJAX request working with the REST API call*/
 
             var httpRequest = new XMLHttpRequest(),
                 that = this,
@@ -60,11 +74,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
             httpRequest.setRequestHeader('Content-Type', 'application/json');
             httpRequest.send();
-
-            return this;
         },
         getOU: function getOU() {
-            //Parse the URL and return a string for the OU
+            /*Parse the URL and return a string for the OU ID(Org Unit ID)*/
             var ou = window.location.pathname.split('/')[4] || window.location.pathname.split('/')[3];
             return ou;
         },
@@ -81,12 +93,28 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 getFinalGrade: '/d2l/api/le/' + ver + '/' + ou + '/grades/values/myGradeValues/'
             };
 
-            return directory[call];
+            if (directory[call] === undefined) {
+
+                var not_found = call;
+
+                console.warn("API call not found in library directory");
+                console.warn("Is this the one you wanted? ", not_found);
+                return not_found;
+            } else {
+                return directory[call];
+            }
         }
     };
 
     /*WINDOW ATTACHER*/
     window.valence = function (a, b) {
+
+        /*
+        The parameter "a" is the API call.
+        The parameter "b" is the callback function
+        if asynchronous is wanted.
+        */
+
         var vers = '2.0.0',
             obj = new Construct(vers, a, b);
 
