@@ -6,6 +6,11 @@
     'use strict'
 
     if (typeof module === 'object' && typeof module.exports === 'object') {
+
+        /*
+        Check to see if in Nodejs environment
+        */
+
         module.exports = global.document ?
             factory(global, true) :
             (w) => {
@@ -15,6 +20,11 @@
                 return factory(w)
             }
     } else {
+
+        /*
+        Done in the browser
+        */
+
         factory(global)
     }
 
@@ -31,14 +41,18 @@
         this.callback = callback
         this.response = {}
 
+        /*Check to see if call need to be async or not.*/
         this.asyncr = arguments[2] ? true : false
 
+        /*Get the data*/
         this.fetch(this.asyncr)
     }
 
     /*PROTOTYPE METHODS*/
     Construct.prototype = {
         fetch: function (asyncr) {
+
+            /*AJAX request working with the REST API call*/
 
             var httpRequest = new XMLHttpRequest(),
                 that = this,
@@ -58,11 +72,9 @@
 
             httpRequest.setRequestHeader('Content-Type', 'application/json')
             httpRequest.send()
-
-            return this
         },
         getOU: function () {
-            //Parse the URL and return a string for the OU
+            /*Parse the URL and return a string for the OU ID(Org Unit ID)*/
             var ou = window.location.pathname.split('/')[4] || window.location.pathname.split('/')[3]
             return ou
         },
@@ -85,6 +97,13 @@
 
     /*WINDOW ATTACHER*/
     window.valence = function (a, b) {
+
+        /*
+        The parameter "a" is the API call.
+        The parameter "b" is the callback function
+        if asynchronous is wanted.
+        */
+
         let vers = '2.0.0',
             obj = new Construct(vers, a, b)
 
