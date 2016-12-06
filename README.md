@@ -1,6 +1,6 @@
 # Valence
 
-An independent development of a vanilla JavaScript Library to get the data from Brightspaces's Valence API.
+An independent development vanilla JavaScript Library to get the data from Brightspaces's Valence API.
 
 ## Elevator Pitch
 
@@ -8,7 +8,7 @@ This library is meant as a shortcut alternative as opposed to using jQuery and w
 
 ## Overview
 
-Attach the library from Equella to your content page to access all the features.  Once attached, invoke the library by typing `valence()` with the shortened API call within the parenthesis as a the first parameter and the second parameter is a callback function.  The callback function accepts one parameter.  
+Attach the library from [Equella](https://content.byui.edu/items/912ef28e-e9d3-4488-820f-f0d3f52c49f5/2/) to your content page to access all the features.  Once attached, invoke the library by typing `valence()` with the shortened API call within the parenthesis as a the first parameter and the second parameter is a callback function.  The callback function accepts one parameter.  
 
 ## Features
 
@@ -33,3 +33,9 @@ Attach the library from Equella to your content page to access all the features.
 This repository contains an eslint standard and the code is compiled and minified through Babel.  To make additional changes, clone the repository and then compile and minify the code.  Once all is finished, then submit the changes.
 
 An additional change could be an additional needed API call in the directory.
+
+## Reference
+
+To attach as a library use the following example...
+
+`<script src="https://content.byui.edu/integ/gen/912ef28e-e9d3-4488-820f-f0d3f52c49f5/0/valence.min.js"></script>`
