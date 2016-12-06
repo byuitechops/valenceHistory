@@ -4,7 +4,7 @@ An independent development vanilla JavaScript Library to get the data from Brigh
 
 ## Elevator Pitch
 
-This library is meant as a shortcut alternative as opposed to using jQuery and writing out the API route.  This library has a directory which will link the shortened API call with the real API call.
+This library is meant to be a shortcut, as opposed to using jQuery and writing out the API route.  This library has a directory which will link the shortened API call with the real API call.
 
 ## Overview
 
