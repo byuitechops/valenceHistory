@@ -63,7 +63,9 @@
             httpRequest.onload = function () {
                 let r = JSON.parse(this.responseText)
                 that.response = r
-                that.callback ? that.callback(r) : console.warn('You have done a synchronous request.  Are you sure you want to continue?')
+                that.callback
+                    ? that.callback(r)
+                : console.warn('You have done a synchronous request.  Are you sure you want to continue?')
             }
 
             httpRequest.onerror = function (e) {
