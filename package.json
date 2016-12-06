@@ -1,26 +1,35 @@
 {
-  "name": "valence",
-  "version": "1.0.0",
-  "description": "This allows us to query the valence API asynchronously.",
-  "main": "valence.js",
-  "dependencies": {
-    "async": "^2.1.2",
-    "query-string": "^4.2.3",
-    "superagent-d2l-session-auth": "^1.0.3",
-    "superagent": "^1.8.4"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/byuicampuscd/valence.git"
-  },
-  "author": "Grant Merrill",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/byuicampuscd/valence/issues"
-  },
-  "homepage": "https://github.com/byuicampuscd/valence#readme"
+    "name": "valence",
+    "version": "2.0.0",
+    "description": "This is a library to be used in the browser for Brightspace Valence API calls.",
+    "main": "valence.js",
+    "dependencies": {},
+    "keywords": [
+    "valence",
+    "brightspace",
+    "js",
+    "vanilla"
+  ],
+    "devDependencies": {
+        "babel-cli": "^6.18.0",
+        "babel-preset-latest": "^6.16.0",
+        "babel-preset-stage-0": "^6.16.0",
+        "eslint": "^3.10.2",
+        "uglify-js": "^2.7.4"
+    },
+    "scripts": {
+        "min": "uglifyjs --screw-ie8 ./bin/valence-comp.js -c -m --output ./build/valence.min.js",
+        "pro-script": "babel ./valence.js --out-file ./bin/valence-comp.js && npm run min",
+        "lint": "eslint ./valence.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/byuicampuscd/valence.git"
+    },
+    "author": "Andrew Gremlich",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/byuicampuscd/valence/issues"
+    },
+    "homepage": "https://github.com/byuicampuscd/valence#readme"
 }
