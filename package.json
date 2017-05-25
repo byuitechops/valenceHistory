@@ -17,10 +17,10 @@
     "type": "git",
     "url": "git+https://github.com/byuicampuscd/valence.git"
   },
-  "author": "Grant Merrill",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/byuicampuscd/valence/issues"
   },
-  "homepage": "https://github.com/byuicampuscd/valence#readme"
+  "homepage": "https://github.com/byuicampuscd/valence#readme",
+  "author": "Grant Merrill",
+  "license": "MIT"
 }
